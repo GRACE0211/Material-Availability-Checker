@@ -50,12 +50,14 @@ namespace Material_Availability_Checker
                     })
                     .ToList();
 
-                int onHandQty = inventoryLotsTable.AsEnumerable()
-                    .Where(r => r.Field<string>("MaterialId") == item.MaterialId)
-                    .Sum(r => r.Field<int>("OnHandQty"));
+                
 
                 foreach (var item in demandByMaterial)
                 {
+                    int onHandQty = inventoryLotsTable.AsEnumerable()
+                    .Where(r => r.Field<string>("MaterialId") == item.MaterialId)
+                    .Sum(r => r.Field<int>("OnHandQty"));
+
                     result.Rows.Add(
                         item.MaterialId,
                         item.TotalDemand,
