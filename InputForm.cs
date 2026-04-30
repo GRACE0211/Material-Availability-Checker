@@ -14,26 +14,31 @@ namespace Material_Availability_Checker
         private DataTable demandTable = new DataTable();
         private DataTable inventoryLotsTable = new DataTable();
         private DataTable purchaseOrdersTable = new DataTable();
+        private DataTable productMaterialsTable = new DataTable();
+        private DataTable materialTable = new DataTable();
+
 
         private void InputForm_Load(object sender, EventArgs e)
         {
-            // 1. 產品清單（給 ComboBox 用）
-            productTable.Columns.Add("ProductId", typeof(string));
-            productTable.Columns.Add("ProductName", typeof(string));
+            // 從 SQL 讀取產品、物料、產品物料清單
+            InitProductTable();
+            InitMaterialTable();
+            InitProductMaterialsTable();
 
-            // 假資料，到時候改成 SQL
-            productTable.Rows.Add("P001", "產品A");
-            productTable.Rows.Add("P002", "產品B");
-            productTable.Rows.Add("P003", "產品C");
-            productTable.Rows.Add("P004", "產品D");
-            productTable.Rows.Add("P005", "產品E");
+            InitDemandTable();
 
-            cmbProduct.DataSource = productTable;
-            cmbProduct.DisplayMember = "ProductName";
-            cmbProduct.ValueMember = "ProductId";
-            cmbProduct.SelectedIndex = 0;
+            // 從 EXCEL 檔載入庫存批次清單和採購訂單清單
+            InitInventoryLotsTable();
+            InitPurchaseOrdersTable();
 
-            // 2. 需求清單（給 DataGridView 用）
+            
+            
+        }
+        // 需求清單（給 DataGridView 用）
+        private void InitDemandTable()
+        {
+            demandTable.Columns.Clear();
+            // 需求清單（給 DataGridView 用）
             demandTable.Columns.Add("ProductId", typeof(string));
             demandTable.Columns.Add("ProductName", typeof(string));
             demandTable.Columns.Add("ProductQty", typeof(int));
@@ -45,11 +50,53 @@ namespace Material_Availability_Checker
             dgvDemand.ReadOnly = true;
             dgvDemand.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDemand.MultiSelect = false;
-
-            // 3. 庫存批次清單（給 DataTable 用）
-            InitInventoryLotsTable();
-            InitPurchaseOrdersTable();
         }
+        // 假的產品清單（給 DataTable 用）
+        private void InitProductTable()
+        {
+                productTable.Columns.Clear();
+                productTable.Columns.Add("ProductId", typeof(string));
+                productTable.Columns.Add("ProductName", typeof(string));
+    
+                // 假資料，到時候改成 SQL
+                productTable.Rows.Add("P001", "產品A");
+                productTable.Rows.Add("P002", "產品B");
+                productTable.Rows.Add("P003", "產品C");
+                productTable.Rows.Add("P004", "產品D");
+                productTable.Rows.Add("P005", "產品E");
+    
+                cmbProduct.DataSource = productTable;
+                cmbProduct.DisplayMember = "ProductName";
+                cmbProduct.ValueMember = "ProductId";
+                cmbProduct.SelectedIndex = 0;
+        }
+        // 假的物料清單（給 DataTable 用）
+        private void InitMaterialTable()
+        {
+            materialTable.Columns.Clear();
+            materialTable.Columns.Add("MaterialId", typeof(string));
+            materialTable.Columns.Add("MaterialName", typeof(string));
+            materialTable.Columns.Add("PartNo", typeof(string));
+            // 假資料，之後換成 SQL
+            materialTable.Rows.Add("M001", "物料A", "SCREW-M4-10");
+            materialTable.Rows.Add("M002", "物料B", "NUT-M4");
+            materialTable.Rows.Add("M003", "物料C", "BOLT-M6");
+        }
+        // 假的產品物料清單（給 DataTable 用）
+        private void InitProductMaterialsTable()
+        {
+            productMaterialsTable.Columns.Clear();
+            productMaterialsTable.Columns.Add("ProductId", typeof(string));
+            productMaterialsTable.Columns.Add("MaterialId", typeof(string));
+            productMaterialsTable.Columns.Add("RequiredQty", typeof(int));
+
+            // 假資料，之後換成 SQL
+            productMaterialsTable.Rows.Add("P001", "M001", 2);
+            productMaterialsTable.Rows.Add("P001", "M002", 3);
+            productMaterialsTable.Rows.Add("P002", "M001", 1);
+            productMaterialsTable.Rows.Add("P002", "M003", 4);
+        }
+        
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -151,13 +198,25 @@ namespace Material_Availability_Checker
 
             int lastRowNumber = lastRow.RowNumber();
 
-            for (int row = 2; row <= lastRowNumber; row++) // 第1列是標題
+            for (int row = 2; row <= lastRowNumber; row++)
             {
                 string lotId = ws.Cell(row, 1).GetString().Trim();
-                string materialId = ws.Cell(row, 2).GetString().Trim();
+                string partNo = ws.Cell(row, 2).GetString().Trim();
 
-                if (string.IsNullOrWhiteSpace(materialId))
+                if (string.IsNullOrWhiteSpace(partNo))
                     continue;
+
+                // ?? PartNo → MaterialId
+                var match = materialTable.AsEnumerable()
+                    .FirstOrDefault(r => r.Field<string>("PartNo") == partNo);
+
+                if (match == null)
+                {
+                    // 可以改成 MessageBox 或記 log
+                    continue;
+                }
+
+                string materialId = match.Field<string>("MaterialId");
 
                 int qty = 0;
                 int.TryParse(ws.Cell(row, 3).GetString().Trim(), out qty);
@@ -212,10 +271,22 @@ namespace Material_Availability_Checker
             for (int row = 2; row <= lastRowNumber; row++)
             {
                 string poId = ws.Cell(row, 1).GetString().Trim();
-                string materialId = ws.Cell(row, 2).GetString().Trim();
+                string partNo = ws.Cell(row, 2).GetString().Trim();
 
-                if (string.IsNullOrWhiteSpace(materialId))
+                if (string.IsNullOrWhiteSpace(partNo))
                     continue;
+
+                // ?? PartNo → MaterialId
+                var match = materialTable.AsEnumerable()
+                    .FirstOrDefault(r => r.Field<string>("PartNo") == partNo);
+
+                if (match == null)
+                {
+                    // 可以改成 MessageBox 或記 log
+                    continue;
+                }
+
+                string materialId = match.Field<string>("MaterialId");
 
                 int orderQty = 0;
                 int.TryParse(ws.Cell(row, 3).GetString().Trim(), out orderQty);
@@ -230,6 +301,19 @@ namespace Material_Availability_Checker
 
                 purchaseOrdersTable.Rows.Add(poId, materialId, orderQty, status, expectedDate);
             }
+        }
+
+        private void btnAnalyze_Click(object sender, EventArgs e)
+        {
+            DataTable result = MaterialCalculator.Calculate(
+                      demandTable, 
+                      inventoryLotsTable, 
+                      purchaseOrdersTable, 
+                      productMaterialsTable,
+                      materialTable
+                      );
+            ResultForm resultForm = new ResultForm(result);
+            resultForm.ShowDialog();
         }
     }
 }

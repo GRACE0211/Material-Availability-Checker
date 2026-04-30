@@ -38,35 +38,32 @@
             btnImportInventory = new Button();
             btnImportPO = new Button();
             btnAnalyze = new Button();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            panel1 = new Panel();
-            panel2 = new Panel();
-            panel3 = new Panel();
             panel4 = new Panel();
+            groupBox3 = new GroupBox();
+            groupBox2 = new GroupBox();
+            groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)numDemandQty).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvDemand).BeginInit();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panel3.SuspendLayout();
             panel4.SuspendLayout();
+            groupBox3.SuspendLayout();
+            groupBox2.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // cmbProduct
             // 
             cmbProduct.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
             cmbProduct.FormattingEnabled = true;
-            cmbProduct.Location = new Point(90, 14);
+            cmbProduct.Location = new Point(58, 62);
             cmbProduct.Name = "cmbProduct";
-            cmbProduct.Size = new Size(108, 27);
+            cmbProduct.Size = new Size(124, 27);
             cmbProduct.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
-            label1.Location = new Point(38, 13);
+            label1.Location = new Point(9, 66);
             label1.Name = "label1";
             label1.Size = new Size(43, 19);
             label1.TabIndex = 1;
@@ -76,7 +73,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
-            label2.Location = new Point(204, 16);
+            label2.Location = new Point(188, 66);
             label2.Name = "label2";
             label2.Size = new Size(43, 19);
             label2.TabIndex = 2;
@@ -85,9 +82,9 @@
             // numDemandQty
             // 
             numDemandQty.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
-            numDemandQty.Location = new Point(256, 14);
+            numDemandQty.Location = new Point(237, 62);
             numDemandQty.Name = "numDemandQty";
-            numDemandQty.Size = new Size(108, 27);
+            numDemandQty.Size = new Size(139, 27);
             numDemandQty.TabIndex = 3;
             // 
             // dgvDemand
@@ -95,17 +92,17 @@
             dgvDemand.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvDemand.BorderStyle = BorderStyle.Fixed3D;
             dgvDemand.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDemand.Location = new Point(3, 3);
+            dgvDemand.Location = new Point(6, 28);
             dgvDemand.Name = "dgvDemand";
-            dgvDemand.Size = new Size(631, 167);
+            dgvDemand.Size = new Size(625, 167);
             dgvDemand.TabIndex = 4;
             // 
             // btnAdd
             // 
             btnAdd.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
-            btnAdd.Location = new Point(370, 13);
+            btnAdd.Location = new Point(398, 62);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(95, 27);
+            btnAdd.Size = new Size(113, 27);
             btnAdd.TabIndex = 5;
             btnAdd.Text = "加入";
             btnAdd.UseVisualStyleBackColor = true;
@@ -114,9 +111,9 @@
             // btnDeleteSelected
             // 
             btnDeleteSelected.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
-            btnDeleteSelected.Location = new Point(471, 13);
+            btnDeleteSelected.Location = new Point(517, 62);
             btnDeleteSelected.Name = "btnDeleteSelected";
-            btnDeleteSelected.Size = new Size(95, 27);
+            btnDeleteSelected.Size = new Size(113, 27);
             btnDeleteSelected.TabIndex = 6;
             btnDeleteSelected.Text = "刪除";
             btnDeleteSelected.UseVisualStyleBackColor = true;
@@ -125,9 +122,9 @@
             // btnImportInventory
             // 
             btnImportInventory.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
-            btnImportInventory.Location = new Point(52, 14);
+            btnImportInventory.Location = new Point(6, 28);
             btnImportInventory.Name = "btnImportInventory";
-            btnImportInventory.Size = new Size(95, 27);
+            btnImportInventory.Size = new Size(119, 27);
             btnImportInventory.TabIndex = 7;
             btnImportInventory.Text = "匯入庫存";
             btnImportInventory.UseVisualStyleBackColor = true;
@@ -136,9 +133,9 @@
             // btnImportPO
             // 
             btnImportPO.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
-            btnImportPO.Location = new Point(153, 14);
+            btnImportPO.Location = new Point(131, 28);
             btnImportPO.Name = "btnImportPO";
-            btnImportPO.Size = new Size(114, 27);
+            btnImportPO.Size = new Size(157, 27);
             btnImportPO.TabIndex = 8;
             btnImportPO.Text = "匯入採購單";
             btnImportPO.UseVisualStyleBackColor = true;
@@ -147,108 +144,87 @@
             // btnAnalyze
             // 
             btnAnalyze.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
-            btnAnalyze.Location = new Point(466, 14);
+            btnAnalyze.Location = new Point(485, 28);
             btnAnalyze.Name = "btnAnalyze";
-            btnAnalyze.Size = new Size(114, 27);
+            btnAnalyze.Size = new Size(146, 27);
             btnAnalyze.TabIndex = 9;
             btnAnalyze.Text = "開始分析";
             btnAnalyze.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("微軟正黑體", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 136);
-            label3.Location = new Point(93, 70);
-            label3.Name = "label3";
-            label3.Size = new Size(95, 22);
-            label3.TabIndex = 10;
-            label3.Text = "需求輸入區";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("微軟正黑體", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 136);
-            label4.Location = new Point(93, 150);
-            label4.Name = "label4";
-            label4.Size = new Size(82, 22);
-            label4.TabIndex = 11;
-            label4.Text = "需求清單:";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("微軟正黑體", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 136);
-            label5.Location = new Point(93, 351);
-            label5.Name = "label5";
-            label5.Size = new Size(112, 22);
-            label5.TabIndex = 12;
-            label5.Text = "外部資料匯入";
-            // 
-            // panel1
-            // 
-            panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(label1);
-            panel1.Controls.Add(cmbProduct);
-            panel1.Controls.Add(numDemandQty);
-            panel1.Controls.Add(btnDeleteSelected);
-            panel1.Controls.Add(btnAdd);
-            panel1.Controls.Add(label2);
-            panel1.Location = new Point(93, 95);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(637, 52);
-            panel1.TabIndex = 13;
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(dgvDemand);
-            panel2.Location = new Point(93, 175);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(637, 173);
-            panel2.TabIndex = 14;
-            // 
-            // panel3
-            // 
-            panel3.BorderStyle = BorderStyle.FixedSingle;
-            panel3.Controls.Add(btnImportInventory);
-            panel3.Controls.Add(btnImportPO);
-            panel3.Controls.Add(btnAnalyze);
-            panel3.Location = new Point(93, 376);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(637, 61);
-            panel3.TabIndex = 15;
+            btnAnalyze.Click += btnAnalyze_Click;
             // 
             // panel4
             // 
-            panel4.Controls.Add(label3);
-            panel4.Controls.Add(panel3);
-            panel4.Controls.Add(label4);
-            panel4.Controls.Add(panel2);
-            panel4.Controls.Add(label5);
-            panel4.Controls.Add(panel1);
+            panel4.BackColor = SystemColors.Menu;
+            panel4.BorderStyle = BorderStyle.Fixed3D;
+            panel4.Controls.Add(groupBox3);
+            panel4.Controls.Add(groupBox2);
+            panel4.Controls.Add(groupBox1);
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(0, 0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(815, 499);
+            panel4.Size = new Size(850, 573);
             panel4.TabIndex = 16;
+            // 
+            // groupBox3
+            // 
+            groupBox3.BackColor = SystemColors.InactiveCaption;
+            groupBox3.Controls.Add(btnImportInventory);
+            groupBox3.Controls.Add(btnImportPO);
+            groupBox3.Controls.Add(btnAnalyze);
+            groupBox3.Font = new Font("微軟正黑體", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
+            groupBox3.Location = new Point(96, 397);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(637, 69);
+            groupBox3.TabIndex = 18;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "外部資料匯入";
+            // 
+            // groupBox2
+            // 
+            groupBox2.BackColor = SystemColors.InactiveCaption;
+            groupBox2.Controls.Add(dgvDemand);
+            groupBox2.Font = new Font("微軟正黑體", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
+            groupBox2.Location = new Point(96, 184);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(637, 207);
+            groupBox2.TabIndex = 17;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "需求清單";
+            // 
+            // groupBox1
+            // 
+            groupBox1.BackColor = SystemColors.InactiveCaption;
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(cmbProduct);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(numDemandQty);
+            groupBox1.Controls.Add(btnAdd);
+            groupBox1.Controls.Add(btnDeleteSelected);
+            groupBox1.Font = new Font("微軟正黑體", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
+            groupBox1.Location = new Point(96, 72);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(637, 105);
+            groupBox1.TabIndex = 16;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "需求輸入區";
             // 
             // InputForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(815, 499);
+            ClientSize = new Size(850, 573);
             Controls.Add(panel4);
             Name = "InputForm";
             Text = "InputForm";
             Load += InputForm_Load;
             ((System.ComponentModel.ISupportInitialize)numDemandQty).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvDemand).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel3.ResumeLayout(false);
             panel4.ResumeLayout(false);
-            panel4.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -264,12 +240,9 @@
         private Button btnImportInventory;
         private Button btnImportPO;
         private Button btnAnalyze;
-        private Label label3;
-        private Label label4;
-        private Label label5;
-        private Panel panel1;
-        private Panel panel2;
-        private Panel panel3;
         private Panel panel4;
+        private GroupBox groupBox2;
+        private GroupBox groupBox1;
+        private GroupBox groupBox3;
     }
 }
