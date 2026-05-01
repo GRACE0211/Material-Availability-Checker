@@ -216,7 +216,7 @@ namespace Material_Availability_Checker
                     continue;
                 }
 
-                string materialId = match.Field<string>("MaterialId");
+                string materialId = match.Field<string>("MaterialId") ?? string.Empty;
 
                 int qty = 0;
                 int.TryParse(ws.Cell(row, 3).GetString().Trim(), out qty);
@@ -286,7 +286,7 @@ namespace Material_Availability_Checker
                     continue;
                 }
 
-                string materialId = match.Field<string>("MaterialId");
+                string materialId = match.Field<string>("MaterialId") ?? string.Empty;
 
                 int orderQty = 0;
                 int.TryParse(ws.Cell(row, 3).GetString().Trim(), out orderQty);

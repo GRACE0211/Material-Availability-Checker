@@ -24,10 +24,11 @@ namespace Material_Availability_Checker
             //result.Rows.Add("M002", 50, 20, 25, 45, -5, "注意 ⚠️");
             //result.Rows.Add("M003", 100, 30, 20, 50, -50, "不足 ❌");
 
+            // 1. BOM展開：根據需求表中的產品，找到對應的BOM，計算每個料件的需求數量
             foreach (DataRow demandRow in demandTable.Rows)
             {
                 string productId = demandRow["ProductId"]?.ToString() ?? string.Empty;
-                int demandQty = Convert.ToInt32(demandRow["DemandQty"]);
+                int productQty = Convert.ToInt32(demandRow["ProductQty"]);
 
                 var bomRows = productMaterialsTable.AsEnumerable()
                     .Where(r => r.Field<string>("ProductId") == productId);
@@ -35,12 +36,13 @@ namespace Material_Availability_Checker
                 foreach (var bomRow in bomRows)
                 {
                     string materialId = bomRow.Field<string>("MaterialId") ?? string.Empty;
-                    int requiredQty = bomRow.Field<int>("requiredQty");
+                    int requiredQty = bomRow.Field<int>("RequiredQty");
 
-                    int totalQty = demandQty * requiredQty;
+                    int totalQty = productQty * requiredQty;
                     expand.Add((materialId, totalQty));
                 }
 
+                // 2. 根據需求表中的產品，找到對應的BOM，計算每個料件的需求數量
                 var demandByMaterial = expand
                     .GroupBy(x => x.MaterialId)
                     .Select(g => new
@@ -50,27 +52,47 @@ namespace Material_Availability_Checker
                     })
                     .ToList();
 
-                
 
+                // 3. 計算每個料件的現有庫存、在途數量、可用庫存，並與需求數量比較，判斷是否足夠
                 foreach (var item in demandByMaterial)
                 {
                     int onHandQty = inventoryLotsTable.AsEnumerable()
                     .Where(r => r.Field<string>("MaterialId") == item.MaterialId)
-                    .Sum(r => r.Field<int>("OnHandQty"));
+                    .Sum(r => r.Field<int>("Qty"));
+
+                    int inOrderQty = purchaseOrdersTable.AsEnumerable()
+                        .Where(r => r.Field<string>("MaterialId") == item.MaterialId)
+                        .Where(r => r.Field<string>("Status") != "已完成") // 只計算未完成的訂單
+                        .Sum(r => r.Field<int>("OrderQty"));
+
+                    int availableQty = onHandQty + inOrderQty;
+                    int net = availableQty - item.TotalDemand;
+
+                    string status = GetStatus(net);
 
                     result.Rows.Add(
                         item.MaterialId,
                         item.TotalDemand,
-                        0, // 現有庫存
-                        0, // 在途數量
-                        0, // 可用庫存
-                        0, // 可用庫存 - 需求
-                        "待計算" // 是否足夠
+                        onHandQty,
+                        inOrderQty,
+                        availableQty,
+                        net,
+                        status
                     );
                 }
             }
 
             return result;
+        }
+
+        private static string GetStatus(int net)
+        {
+            if (net >= 0)
+                return "足夠 ✔️";
+            else if (net < 0 && net >= -20)
+                return "注意 ⚠️";
+            else
+                return "不足 ❌";
         }
 
         private static DataTable CreateResultTable()

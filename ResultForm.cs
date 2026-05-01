@@ -28,7 +28,7 @@ namespace Material_Availability_Checker
             dgvResult.ReadOnly = true;
             dgvResult.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvResult.MultiSelect = false;
-            dgvResult.CellFormatting += dgvResult_CellFormatting;
+            //dgvResult.CellFormatting += dgvResult_CellFormatting ;
         }
 
         private void dgvResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -55,6 +55,7 @@ namespace Material_Availability_Checker
             {
                 row.DefaultCellStyle.BackColor = Color.LightCoral;
             }
+
         }
 
         
