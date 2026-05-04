@@ -47,7 +47,7 @@ namespace Material_Availability_Checker
             dgvDemand.DataSource = demandTable;
 
             dgvDemand.AllowUserToAddRows = false;
-            dgvDemand.ReadOnly = true;
+            //dgvDemand.ReadOnly = true;
             dgvDemand.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDemand.MultiSelect = false;
         }

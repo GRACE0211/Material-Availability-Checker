@@ -28,9 +28,17 @@ namespace Material_Availability_Checker
             dgvResult.ReadOnly = true;
             dgvResult.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvResult.MultiSelect = false;
+            dgvResult.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            //dgvResult.CellToolTipTextNeeded += dgvResult_CellToolTipTextNeeded;
+            dgvResult.ShowCellToolTips = true;
+            if (dgvResult.Columns.Contains("快過期Tooltip"))
+            {
+                dgvResult.Columns["快過期Tooltip"].Visible = false;
+            }
             //dgvResult.CellFormatting += dgvResult_CellFormatting ;
         }
 
+        // 根據 "是否足夠" 欄位的值來設定行的背景顏色
         private void dgvResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var row = dgvResult.Rows[e.RowIndex];
@@ -58,6 +66,26 @@ namespace Material_Availability_Checker
 
         }
 
-        
+        private void dgvResult_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+                return;
+
+            if (dgvResult.Columns[e.ColumnIndex].Name != "快過期明細")
+                return;
+
+            var value = dgvResult.Rows[e.RowIndex].Cells["快過期Tooltip"].Value;
+
+            if (value == null || value == DBNull.Value)
+                return;
+
+            string text = value.ToString() ?? "";
+
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
+            e.ToolTipText = text;
+        }
+
     }
 }

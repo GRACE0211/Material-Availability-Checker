@@ -99,57 +99,62 @@
             // 
             // btnAdd
             // 
+            btnAdd.BackColor = Color.LightSteelBlue;
             btnAdd.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
             btnAdd.Location = new Point(398, 62);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(113, 27);
+            btnAdd.Size = new Size(113, 37);
             btnAdd.TabIndex = 5;
             btnAdd.Text = "加入";
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
             // 
             // btnDeleteSelected
             // 
+            btnDeleteSelected.BackColor = Color.RosyBrown;
             btnDeleteSelected.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
             btnDeleteSelected.Location = new Point(517, 62);
             btnDeleteSelected.Name = "btnDeleteSelected";
-            btnDeleteSelected.Size = new Size(113, 27);
+            btnDeleteSelected.Size = new Size(113, 37);
             btnDeleteSelected.TabIndex = 6;
             btnDeleteSelected.Text = "刪除";
-            btnDeleteSelected.UseVisualStyleBackColor = true;
+            btnDeleteSelected.UseVisualStyleBackColor = false;
             btnDeleteSelected.Click += btnDeleteSelected_Click;
             // 
             // btnImportInventory
             // 
+            btnImportInventory.BackColor = Color.DarkGray;
             btnImportInventory.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
             btnImportInventory.Location = new Point(6, 28);
             btnImportInventory.Name = "btnImportInventory";
-            btnImportInventory.Size = new Size(119, 27);
+            btnImportInventory.Size = new Size(119, 35);
             btnImportInventory.TabIndex = 7;
             btnImportInventory.Text = "匯入庫存";
-            btnImportInventory.UseVisualStyleBackColor = true;
+            btnImportInventory.UseVisualStyleBackColor = false;
             btnImportInventory.Click += btnImportInventory_Click;
             // 
             // btnImportPO
             // 
+            btnImportPO.BackColor = Color.DarkGray;
             btnImportPO.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
             btnImportPO.Location = new Point(131, 28);
             btnImportPO.Name = "btnImportPO";
-            btnImportPO.Size = new Size(157, 27);
+            btnImportPO.Size = new Size(157, 35);
             btnImportPO.TabIndex = 8;
             btnImportPO.Text = "匯入採購單";
-            btnImportPO.UseVisualStyleBackColor = true;
+            btnImportPO.UseVisualStyleBackColor = false;
             btnImportPO.Click += btnImportPO_Click;
             // 
             // btnAnalyze
             // 
+            btnAnalyze.BackColor = Color.YellowGreen;
             btnAnalyze.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
             btnAnalyze.Location = new Point(485, 28);
             btnAnalyze.Name = "btnAnalyze";
-            btnAnalyze.Size = new Size(146, 27);
+            btnAnalyze.Size = new Size(146, 35);
             btnAnalyze.TabIndex = 9;
             btnAnalyze.Text = "開始分析";
-            btnAnalyze.UseVisualStyleBackColor = true;
+            btnAnalyze.UseVisualStyleBackColor = false;
             btnAnalyze.Click += btnAnalyze_Click;
             // 
             // panel4
@@ -167,21 +172,21 @@
             // 
             // groupBox3
             // 
-            groupBox3.BackColor = SystemColors.InactiveCaption;
+            groupBox3.BackColor = Color.Gainsboro;
             groupBox3.Controls.Add(btnImportInventory);
             groupBox3.Controls.Add(btnImportPO);
             groupBox3.Controls.Add(btnAnalyze);
             groupBox3.Font = new Font("微軟正黑體", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
             groupBox3.Location = new Point(96, 397);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(637, 69);
+            groupBox3.Size = new Size(637, 71);
             groupBox3.TabIndex = 18;
             groupBox3.TabStop = false;
             groupBox3.Text = "外部資料匯入";
             // 
             // groupBox2
             // 
-            groupBox2.BackColor = SystemColors.InactiveCaption;
+            groupBox2.BackColor = Color.Gainsboro;
             groupBox2.Controls.Add(dgvDemand);
             groupBox2.Font = new Font("微軟正黑體", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
             groupBox2.Location = new Point(96, 184);
@@ -193,7 +198,7 @@
             // 
             // groupBox1
             // 
-            groupBox1.BackColor = SystemColors.InactiveCaption;
+            groupBox1.BackColor = Color.Gainsboro;
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(cmbProduct);
             groupBox1.Controls.Add(label2);
