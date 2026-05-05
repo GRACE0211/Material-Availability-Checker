@@ -6,17 +6,17 @@
 
 ## 🔧 功能 Features
 
-- 輸入產品與需求數量
-- 自動展開 BOM（產品 → 材料）
-- 計算材料需求總量
-- 整合：
++ 輸入產品與需求數量
++ 自動展開 BOM（產品 → 材料）
++ 計算材料需求總量
++ 整合：
   - 現有庫存（Inventory）
   - 在途採購（Purchase Orders）
-- 判斷材料狀態：
++ 判斷材料狀態：
   - ✅ 足夠
   - ⚠️ 注意
   - ❌ 不足
-- 顯示「快過期材料」
++ 顯示「快過期材料」
   - 表格顯示摘要（LotId:Qty）
   - Tooltip 顯示完整資訊（批號、料號、數量、到期日）
 
@@ -26,7 +26,7 @@
 
 ### 1. Input（需求與資料來源）
 
-![InputForm](images/InputForm.png)
+![InputForm](images/InputForm.jpg)
 
 + 簡單說明：
     使用者輸入產品需求，並匯入相關庫存與採購資料
@@ -38,12 +38,11 @@
 + 資料來源：
 
  - 手動輸入：
-    產品（Product）
-    數量（Qty）
+    1. 產品（Product）
+    2. 數量（Qty）
  - Excel 匯入：
-    現有庫存（InventoryLots）
-    採購單（PurchaseOrders）
-
+    1. 現有庫存（InventoryLots）
+    2. 採購單（PurchaseOrders）
 + 重點：
 
     將分散資料整合為後續計算基礎
