@@ -120,6 +120,7 @@
     - 將計算邏輯集中在 `MaterialCalculator`，讓 UI 與資料運算分開
 
 ### 4. 結果判斷與視覺化
+
 + ResultForm
 ![ResultForm](images/ResultForm.jpg)
 + 簡單說明：
