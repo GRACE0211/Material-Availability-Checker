@@ -26,6 +26,7 @@
 
 ### 1. Input（需求與資料來源）
 
++ InputForm
 ![InputForm](images/InputForm.jpg)
 
 + 簡單說明：
@@ -63,9 +64,9 @@
     使用 ProductMaterials 定義 BOM
 
 + 計算方式：
-
+```text
     材料需求 = 產品數量 × RequiredQty
-    
+```
 ### 3. MaterialCalculator 運算邏輯
 
 + 簡單說明：
@@ -119,7 +120,7 @@
     - 將計算邏輯集中在 `MaterialCalculator`，讓 UI 與資料運算分開
 
 ### 4. 結果判斷與視覺化
-
++ ResultForm
 ![ResultForm](images/ResultForm.jpg)
 + 簡單說明：
 
