@@ -36,11 +36,10 @@
     產品 P001 × 10
 
 + 資料來源：
-
- - 手動輸入：
+  - 手動輸入：
     1. 產品（Product）
     2. 數量（Qty）
- - Excel 匯入：
+  - Excel 匯入：
     1. 現有庫存（InventoryLots）
     2. 採購單（PurchaseOrders）
 + 重點：
@@ -84,13 +83,13 @@
     7. 依照結果判斷狀態
 
 + 計算方式：
-
+```
     DemandQty = 產品數量 × RequiredQty
 
     AvailableQty = InventoryQty + PurchaseQty
 
     NetQty = AvailableQty - DemandQty
-
+```
 
 + 範例：
 
@@ -128,11 +127,11 @@
     系統會依照 Net 計算結果，將每個材料標示為「足夠 / 注意 / 不足」，並透過顏色顯示在畫面上，讓使用者可以快速判斷料況。
 
 + 判斷邏輯：
-
+```
     Net ≥ 0 → 足夠  
     接近 0（或低於安全值）→ 注意  
     Net < 0 → 不足  
-
+```
 + 範例：
 
     ```
