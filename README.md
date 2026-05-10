@@ -123,7 +123,7 @@
 
 + ResultForm
 
-![ResultForm](images/ResultForm.jpg)
+![ResultForm_tabPage1](images/ResultForm_tabPage1.jpg)
 
 + 簡單說明：
 
@@ -176,6 +176,44 @@
     - 提供 Lot level 細節，而不只是總數
     - UI 保持簡潔，但資訊完整
     - 屬於實務導向功能
+
+### 6. 材料明細頁（tabPage2）
+
+![ResultForm_tabPage2](images/ResultForm_tabPage2.jpg)
+
++ 簡單說明：
+
+    使用者可在結果表中雙擊某一材料，切換至明細頁查看該材料的完整資訊與批次資料。
+
++ 操作方式：
+
+    在「材料分析結果」頁面中，雙擊任一資料列，即可進入材料明細頁。
+
++ 顯示內容：
+
+    - 材料基本資訊（MaterialId / 需求數量 / 庫存 / 在途 / Net / 狀態）
+    - 批次明細（LotId / 數量 / 到期日 / 剩餘天數）
+
++ 範例：
+    ```text
+    材料：M003
+    需求數量：180
+    現有庫存：30
+    在途數量：100
+    可用庫存：130
+    Net：-50
+    狀態：不足 ❌
+
+    批次明細：
+    Lot001 / Qty 10 / Expiry 2026-05-20 / 剩餘 12 天
+    Lot002 / Qty 20 / Expiry 2026-06-15 / 剩餘 38 天
+    ```
+
++ 重點：
+
+    - 提供從「總覽 → 明細」的資料追蹤能力
+    - 協助使用者快速定位問題材料
+    - 搭配雙擊操作，提升使用直覺性
 
 ---
 

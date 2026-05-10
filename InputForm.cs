@@ -170,7 +170,7 @@ namespace Material_Availability_Checker
         {
             using OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Excel Files|*.xlsx;*.xls";
-
+            // 沒選檔案就直接結束
             if (ofd.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -188,25 +188,25 @@ namespace Material_Availability_Checker
         private void ImportInventoryLotsFromExcel(string filePath)
         {
             inventoryLotsTable.Rows.Clear();
-
+            // 用ClosedXML讀取 Excel 檔案，Worksheet(1)代表讀第一個工作表
             using var workbook = new XLWorkbook(filePath);
             var ws = workbook.Worksheet(1);
-
+            // 找最後一列有資料的地方
             var lastRow = ws.LastRowUsed();
             if (lastRow == null)
                 return;
 
             int lastRowNumber = lastRow.RowNumber();
-
+            // 因為第一列通常是標題，所以從第二列開始讀取資料
             for (int row = 2; row <= lastRowNumber; row++)
             {
                 string lotId = ws.Cell(row, 1).GetString().Trim();
                 string partNo = ws.Cell(row, 2).GetString().Trim();
-
+                // 如果沒有PartNo，就跳過這一列
                 if (string.IsNullOrWhiteSpace(partNo))
                     continue;
 
-                // ?? PartNo → MaterialId
+                // 用 PartNo 找 MaterialId
                 var match = materialTable.AsEnumerable()
                     .FirstOrDefault(r => r.Field<string>("PartNo") == partNo);
 
@@ -232,7 +232,7 @@ namespace Material_Availability_Checker
                 {
                     receivedDate = DateTime.MinValue;
                 }
-
+                // 把讀到的資料加到 inventoryLotsTable 裡
                 inventoryLotsTable.Rows.Add(lotId, materialId, qty, expiryDate, receivedDate);
             }
         }
@@ -303,8 +303,32 @@ namespace Material_Availability_Checker
             }
         }
 
+        private bool ValueBeforeAnalyze()
+        {
+            if (demandTable.Rows.Count == 0)
+            {
+                MessageBox.Show("請至少新增一筆需求");
+                return false;
+            }
+            if (inventoryLotsTable.Rows.Count == 0)
+            {
+                MessageBox.Show("請先匯入庫存批次清單");
+                return false;
+            }
+            if (purchaseOrdersTable.Rows.Count == 0)
+            {
+                MessageBox.Show("請先匯入採購訂單清單");
+                return false;
+            }
+            return true;
+        }
+
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
+
+            if (!ValueBeforeAnalyze())
+                return;
+
             DataTable result = MaterialCalculator.Calculate(
                       demandTable, 
                       inventoryLotsTable, 
@@ -312,7 +336,7 @@ namespace Material_Availability_Checker
                       productMaterialsTable,
                       materialTable
                       );
-            ResultForm resultForm = new ResultForm(result);
+            ResultForm resultForm = new ResultForm(result, inventoryLotsTable, materialTable);
             resultForm.ShowDialog();
         }
     }
