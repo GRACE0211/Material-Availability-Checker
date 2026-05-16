@@ -185,6 +185,7 @@ namespace Material_Availability_Checker
             }
         }
         // 從 Excel 匯入庫存
+
         private void ImportInventoryLotsFromExcel(string filePath)
         {
             inventoryLotsTable.Rows.Clear();
@@ -193,50 +194,72 @@ namespace Material_Availability_Checker
             var ws = workbook.Worksheet(1);
             // 找最後一列有資料的地方
             var lastRow = ws.LastRowUsed();
-            if (lastRow == null)
+            var lastColumn = ws.LastColumnUsed();
+
+            if (lastRow == null || lastColumn == null)
                 return;
 
             int lastRowNumber = lastRow.RowNumber();
-            // 因為第一列通常是標題，所以從第二列開始讀取資料
+            int lastColumnNumber = lastColumn.ColumnNumber();
+            // 建對照表
+            var headerMap = new Dictionary<string, int>();
+            /* 
+             * 記錄每一個(需要的)欄位在哪一欄
+             * EX: "LotId" → 1, "PartNo" → 3, "Qty" → 4, "ExpiryDate" → 6, "ReceivedDate" → 7
+             */
+            for (int col = 1; col <= lastColumnNumber; col++)
+            {
+                string header = ws.Cell(1, col).GetString().Trim();
+
+                if (!string.IsNullOrWhiteSpace(header))
+                    headerMap[header] = col;
+            }
+            // 只抓我要的欄位，如果缺欄位就跳錯誤訊息
+            if (!headerMap.ContainsKey("LotId") ||
+                !headerMap.ContainsKey("PartNo") ||
+                !headerMap.ContainsKey("Qty") ||
+                !headerMap.ContainsKey("ExpiryDate") ||
+                !headerMap.ContainsKey("ReceivedDate"))
+            {
+                MessageBox.Show("庫存 Excel 缺少必要欄位：LotId、PartNo、Qty、ExpiryDate、ReceivedDate");
+                return;
+            }
+            // 從第二列(第一列是標題)開始讀取資料，一個一個取欄位數
             for (int row = 2; row <= lastRowNumber; row++)
             {
-                string lotId = ws.Cell(row, 1).GetString().Trim();
-                string partNo = ws.Cell(row, 2).GetString().Trim();
-                // 如果沒有PartNo，就跳過這一列
+                // 先去字典查看這個欄位在 Excel 的哪一欄，再用 ClosedXML 讀取該欄的值
+                string lotId = ws.Cell(row, headerMap["LotId"]).GetString().Trim();
+                string partNo = ws.Cell(row, headerMap["PartNo"]).GetString().Trim();
+
                 if (string.IsNullOrWhiteSpace(partNo))
                     continue;
-
-                // 用 PartNo 找 MaterialId
+                // ?? PartNo → MaterialId
                 var match = materialTable.AsEnumerable()
                     .FirstOrDefault(r => r.Field<string>("PartNo") == partNo);
 
                 if (match == null)
-                {
-                    // 可以改成 MessageBox 或記 log
                     continue;
-                }
 
                 string materialId = match.Field<string>("MaterialId") ?? string.Empty;
 
                 int qty = 0;
-                int.TryParse(ws.Cell(row, 3).GetString().Trim(), out qty);
+                int.TryParse(ws.Cell(row, headerMap["Qty"]).GetString().Trim(), out qty);
 
                 DateTime expiryDate;
-                if (!DateTime.TryParse(ws.Cell(row, 4).GetString().Trim(), out expiryDate))
+                if (!DateTime.TryParse(ws.Cell(row, headerMap["ExpiryDate"]).GetString().Trim(), out expiryDate))
                 {
                     expiryDate = DateTime.MaxValue;
                 }
 
                 DateTime receivedDate;
-                if (!DateTime.TryParse(ws.Cell(row, 5).GetString().Trim(), out receivedDate))
+                if (!DateTime.TryParse(ws.Cell(row, headerMap["ReceivedDate"]).GetString().Trim(), out receivedDate))
                 {
                     receivedDate = DateTime.MinValue;
                 }
-                // 把讀到的資料加到 inventoryLotsTable 裡
+
                 inventoryLotsTable.Rows.Add(lotId, materialId, qty, expiryDate, receivedDate);
             }
         }
-
         private void btnImportPO_Click(object sender, EventArgs e)
         {
             using OpenFileDialog ofd = new OpenFileDialog();
