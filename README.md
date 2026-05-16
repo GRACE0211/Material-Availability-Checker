@@ -162,6 +162,9 @@
 
 + Tooltip（滑鼠移上去）：
 
+![ResultForm_tooltip](images/ResultForm_tooltip.jpg)
+
+
     ```text
     Lot001 / PartNo: M001 / Expiry: 2026-05-30
     Lot002 / PartNo: M001 / Expiry: 2026-06-15
