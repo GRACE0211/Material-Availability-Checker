@@ -51,6 +51,14 @@
             label2 = new Label();
             label4 = new Label();
             label3 = new Label();
+            tabPage3 = new TabPage();
+            groupBox2 = new GroupBox();
+            groupBox1 = new GroupBox();
+            label10 = new Label();
+            comboBoxABC = new ComboBox();
+            label9 = new Label();
+            comboBoxStatus = new ComboBox();
+            dataGridView1 = new DataGridView();
             toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)dgvResult).BeginInit();
             tabControl1.SuspendLayout();
@@ -59,6 +67,9 @@
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLotDetails).BeginInit();
+            tabPage3.SuspendLayout();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // dgvResult
@@ -77,8 +88,9 @@
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabPage3);
             tabControl1.Dock = DockStyle.Fill;
-            tabControl1.Font = new Font("微軟正黑體", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            tabControl1.Font = new Font("微軟正黑體", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -89,10 +101,11 @@
             // 
             tabPage1.Controls.Add(label8);
             tabPage1.Controls.Add(dgvResult);
-            tabPage1.Location = new Point(4, 28);
+            tabPage1.Font = new Font("微軟正黑體", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
+            tabPage1.Location = new Point(4, 30);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(925, 535);
+            tabPage1.Size = new Size(925, 533);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "材料分析結果";
             tabPage1.UseVisualStyleBackColor = true;
@@ -112,10 +125,10 @@
             // 
             tabPage2.Controls.Add(panel1);
             tabPage2.Font = new Font("微軟正黑體", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
-            tabPage2.Location = new Point(4, 28);
+            tabPage2.Location = new Point(4, 30);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(925, 535);
+            tabPage2.Size = new Size(925, 533);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "材料明細頁";
             tabPage2.UseVisualStyleBackColor = true;
@@ -126,7 +139,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(3, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(919, 529);
+            panel1.Size = new Size(919, 527);
             panel1.TabIndex = 0;
             // 
             // panel2
@@ -149,7 +162,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(919, 529);
+            panel2.Size = new Size(919, 527);
             panel2.TabIndex = 6;
             // 
             // lblStatus
@@ -301,6 +314,85 @@
             label3.TabIndex = 2;
             label3.Text = "現有庫存:";
             // 
+            // tabPage3
+            // 
+            tabPage3.Controls.Add(groupBox2);
+            tabPage3.Controls.Add(groupBox1);
+            tabPage3.Font = new Font("微軟正黑體", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
+            tabPage3.Location = new Point(4, 30);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Size = new Size(925, 533);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "材料風險分析";
+            tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Font = new Font("微軟正黑體", 12F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            groupBox2.Location = new Point(8, 274);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(909, 253);
+            groupBox2.TabIndex = 2;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "材料風險分析";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(label10);
+            groupBox1.Controls.Add(comboBoxABC);
+            groupBox1.Controls.Add(label9);
+            groupBox1.Controls.Add(comboBoxStatus);
+            groupBox1.Controls.Add(dataGridView1);
+            groupBox1.Font = new Font("微軟正黑體", 12F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            groupBox1.Location = new Point(8, 3);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(909, 265);
+            groupBox1.TabIndex = 1;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "材料重要性分析";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(6, 63);
+            label10.Name = "label10";
+            label10.Size = new Size(59, 20);
+            label10.TabIndex = 4;
+            label10.Text = "A/B/C:";
+            // 
+            // comboBoxABC
+            // 
+            comboBoxABC.FormattingEnabled = true;
+            comboBoxABC.Location = new Point(6, 86);
+            comboBoxABC.Name = "comboBoxABC";
+            comboBoxABC.Size = new Size(117, 28);
+            comboBoxABC.TabIndex = 3;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(6, 125);
+            label9.Name = "label9";
+            label9.Size = new Size(45, 20);
+            label9.TabIndex = 2;
+            label9.Text = "狀態:";
+            // 
+            // comboBoxStatus
+            // 
+            comboBoxStatus.FormattingEnabled = true;
+            comboBoxStatus.Location = new Point(6, 148);
+            comboBoxStatus.Name = "comboBoxStatus";
+            comboBoxStatus.Size = new Size(117, 28);
+            comboBoxStatus.TabIndex = 1;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(129, 17);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(774, 242);
+            dataGridView1.TabIndex = 0;
+            // 
             // ResultForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -319,6 +411,10 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLotDetails).EndInit();
+            tabPage3.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -347,5 +443,13 @@
         private Label label7;
         private Label lblNetQty;
         private Label label8;
+        private TabPage tabPage3;
+        private DataGridView dataGridView1;
+        private GroupBox groupBox2;
+        private GroupBox groupBox1;
+        private Label label10;
+        private ComboBox comboBoxABC;
+        private Label label9;
+        private ComboBox comboBoxStatus;
     }
 }

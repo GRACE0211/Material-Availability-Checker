@@ -41,6 +41,8 @@ namespace Material_Availability_Checker
                 dgvResult.Columns["快過期Tooltip"].Visible = false;
             }
             //dgvResult.CellFormatting += dgvResult_CellFormatting ;
+
+            InitFilters();
         }
 
         // 根據 "是否足夠" 欄位的值來設定行的背景顏色
@@ -153,6 +155,23 @@ namespace Material_Availability_Checker
 
             //切換到tabPage2
             tabControl1.SelectedTab = tabPage2;
+        }
+
+        private void InitFilters()
+        {
+            comboBoxStatus.Items.Clear();
+            comboBoxStatus.Items.Add("全部");
+            comboBoxStatus.Items.Add("足夠");
+            comboBoxStatus.Items.Add("注意");
+            comboBoxStatus.Items.Add("不足");
+            comboBoxStatus.SelectedIndex = 0;
+
+            comboBoxABC.Items.Clear();
+            comboBoxABC.Items.Add("全部");
+            comboBoxABC.Items.Add("A");
+            comboBoxABC.Items.Add("B");
+            comboBoxABC.Items.Add("C");
+            comboBoxABC.SelectedIndex = 0;
         }
     }
 }
