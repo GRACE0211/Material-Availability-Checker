@@ -40,6 +40,7 @@
             btnAnalyze = new Button();
             panel4 = new Panel();
             groupBox3 = new GroupBox();
+            btnImportDemandSchedule = new Button();
             groupBox2 = new GroupBox();
             groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)numDemandQty).BeginInit();
@@ -173,6 +174,7 @@
             // groupBox3
             // 
             groupBox3.BackColor = Color.Gainsboro;
+            groupBox3.Controls.Add(btnImportDemandSchedule);
             groupBox3.Controls.Add(btnImportInventory);
             groupBox3.Controls.Add(btnImportPO);
             groupBox3.Controls.Add(btnAnalyze);
@@ -183,6 +185,18 @@
             groupBox3.TabIndex = 18;
             groupBox3.TabStop = false;
             groupBox3.Text = "外部資料匯入";
+            // 
+            // btnImportDemandSchedule
+            // 
+            btnImportDemandSchedule.BackColor = Color.DarkGray;
+            btnImportDemandSchedule.Font = new Font("微軟正黑體", 11.25F, FontStyle.Bold);
+            btnImportDemandSchedule.Location = new Point(294, 28);
+            btnImportDemandSchedule.Name = "btnImportDemandSchedule";
+            btnImportDemandSchedule.Size = new Size(157, 35);
+            btnImportDemandSchedule.TabIndex = 10;
+            btnImportDemandSchedule.Text = "匯入需求排程";
+            btnImportDemandSchedule.UseVisualStyleBackColor = false;
+            btnImportDemandSchedule.Click += btnImportDemandSchedule_Click;
             // 
             // groupBox2
             // 
@@ -249,5 +263,6 @@
         private GroupBox groupBox2;
         private GroupBox groupBox1;
         private GroupBox groupBox3;
+        private Button btnImportDemandSchedule;
     }
 }

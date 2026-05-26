@@ -31,8 +31,9 @@ namespace Material_Availability_Checker
             InitInventoryLotsTable();
             InitPurchaseOrdersTable();
 
-            
-            
+
+
+
         }
         // 需求清單（給 DataGridView 用）
         private void InitDemandTable()
@@ -165,6 +166,7 @@ namespace Material_Availability_Checker
             purchaseOrdersTable.Columns.Add("Status", typeof(string));
             purchaseOrdersTable.Columns.Add("ExpectedDate", typeof(DateTime));
         }
+
         // 5. 從 Excel 匯入庫存
         private void btnImportInventory_Click(object sender, EventArgs e)
         {
@@ -326,6 +328,154 @@ namespace Material_Availability_Checker
             }
         }
 
+        // 匯入需求排程按鈕
+        private void btnImportDemandSchedule_Click(object sender, EventArgs e)
+        {
+            using OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Excel Files|*.xlsx;*.xls";
+
+            // 沒選檔案就直接結束
+            if (ofd.ShowDialog() != DialogResult.OK)
+                return;
+
+            try
+            {
+                ImportDemandScheduleFromExcel(ofd.FileName);
+
+                MessageBox.Show(
+                    $"需求排程匯入完成，目前需求共 {demandTable.Rows.Count} 筆"
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("匯入需求排程失敗：" + ex.Message);
+            }
+        }
+
+        // 從 Excel 匯入需求排程
+        private void ImportDemandScheduleFromExcel(string filePath)
+        {
+            demandTable.Rows.Clear();
+
+            // 用 ClosedXML 讀取 Excel 檔案，Worksheet(1) 代表讀第一個工作表
+            using var workbook = new XLWorkbook(filePath);
+            var ws = workbook.Worksheet(1);
+
+            // 找最後一列與最後一欄有資料的位置
+            var lastRow = ws.LastRowUsed();
+            var lastColumn = ws.LastColumnUsed();
+
+            if (lastRow == null || lastColumn == null)
+                return;
+
+            int lastRowNumber = lastRow.RowNumber();
+            int lastColumnNumber = lastColumn.ColumnNumber();
+
+            // 建立欄位對照表
+            var headerMap = new Dictionary<string, int>();
+
+            /*
+             * 記錄每個欄位在哪一欄
+             * EX:
+             * "ProductId" → 1
+             * "ProductQty" → 3
+             * "DueDate" → 5
+             */
+
+            for (int col = 1; col <= lastColumnNumber; col++)
+            {
+                string header = ws.Cell(1, col).GetString().Trim();
+
+                if (!string.IsNullOrWhiteSpace(header))
+                    headerMap[header] = col;
+            }
+
+            // 檢查必要欄位是否存在
+            if (!headerMap.ContainsKey("ProductId") ||
+                !headerMap.ContainsKey("ProductQty") ||
+                !headerMap.ContainsKey("DueDate"))
+            {
+                MessageBox.Show(
+                    "需求排程 Excel 缺少必要欄位：ProductId、ProductQty、DueDate"
+                );
+                return;
+            }
+
+            // 從第二列開始讀取（第一列為標題）
+            for (int row = 2; row <= lastRowNumber; row++)
+            {
+                // 先透過 headerMap 找欄位位置，再讀取該欄位的值
+                string productId = ws.Cell(
+                    row,
+                    headerMap["ProductId"]
+                ).GetString().Trim();
+
+                // ProductId 空白就跳過
+                if (string.IsNullOrWhiteSpace(productId))
+                    continue;
+
+                // 檢查產品是否存在於 productTable
+                var match = productTable.AsEnumerable()
+                    .FirstOrDefault(r =>
+                        r.Field<string>("ProductId") == productId
+                    );
+
+                // 找不到產品就跳過
+                if (match == null)
+                    continue;
+
+                string productName =
+                    match.Field<string>("ProductName") ?? "";
+
+                // 讀取需求數量
+                int productQty = 0;
+
+                int.TryParse(
+                    ws.Cell(
+                        row,
+                        headerMap["ProductQty"]
+                    ).GetString().Trim(),
+                    out productQty
+                );
+
+                // 讀取需求日期
+                DateTime dueDate;
+
+                if (!DateTime.TryParse(
+                    ws.Cell(
+                        row,
+                        headerMap["DueDate"]
+                    ).GetString().Trim(),
+                    out dueDate))
+                {
+                    dueDate = DateTime.MinValue;
+                }
+
+                
+
+                // 同步加入 demandTable（後續 MaterialCalculator 使用）
+                DataRow? existingRow = demandTable.AsEnumerable()
+                    .FirstOrDefault(r =>
+                        r.Field<string>("ProductId") == productId
+                    );
+
+                if (existingRow != null)
+                {
+                    existingRow["ProductQty"] =
+                        Convert.ToInt32(existingRow["ProductQty"])
+                        + productQty;
+                }
+                else
+                {
+                    demandTable.Rows.Add(
+                        productId,
+                        productName,
+                        productQty
+                    );
+                }
+            }
+        }
+
         private bool ValueBeforeAnalyze()
         {
             if (demandTable.Rows.Count == 0)
@@ -343,6 +493,7 @@ namespace Material_Availability_Checker
                 MessageBox.Show("請先匯入採購訂單清單");
                 return false;
             }
+
             return true;
         }
 
