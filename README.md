@@ -180,6 +180,7 @@ P002      | 50         | 2026/06/03
     ```
 
 + Tooltip（滑鼠移上去）：
+
     可快速查看批次的詳細資訊，例如料號、數量與到期日。
 
 ![ResultForm_tooltip](images/ResultForm_tooltip.jpg)
